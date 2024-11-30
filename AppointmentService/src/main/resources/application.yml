@@ -6,6 +6,11 @@ spring:
     url: jdbc:mysql://localhost:3306/centre_dentaire_appointement
     username: root
     password:
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
   jpa:
     hibernate:
       ddl-auto: update

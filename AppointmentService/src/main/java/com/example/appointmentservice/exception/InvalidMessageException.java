@@ -1,2 +1,7 @@
-package com.example.appointmentservice.exception;public class InvalidMessageException {
+package com.example.appointmentservice.exception;
+
+public class InvalidMessageException extends RuntimeException {
+    public InvalidMessageException(String message) {
+        super(message);
+    }
 }

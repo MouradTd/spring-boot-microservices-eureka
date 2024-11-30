@@ -1,4 +1,4 @@
-package com.example.appointmentservice.config;
+package com.example.notificationservice.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

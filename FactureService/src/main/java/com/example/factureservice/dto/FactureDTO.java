@@ -1,15 +1,16 @@
-package com.example.patientservice.dto;
+package com.example.factureservice.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientDTO {
+public class FactureDTO {
 //    private long id;
-    private String name;
-    private String surname;
-    private String email;
-    private String phone;
-    private String address;
+    private double amount;
+    private String date;
+    private String description;
+    private long rdvid;
 }

@@ -7,12 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,22 +32,7 @@ public class Patient {
     private String insuranceInformation;
     private String primaryCarePhysician;
 
-    public Patient() {
-    }
 
-    public Patient(long id, String name, String address, String email, String phone, int age, Gender gender, String dateOfBirth, String medicalHistory, String allergies, String emergencyContact, String insuranceInformation, String primaryCarePhysician) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-        this.age = age;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.medicalHistory = medicalHistory;
-        this.allergies = allergies;
-        this.emergencyContact = emergencyContact;
-        this.insuranceInformation = insuranceInformation;
-        this.primaryCarePhysician = primaryCarePhysician;
-    }
+
+
 }

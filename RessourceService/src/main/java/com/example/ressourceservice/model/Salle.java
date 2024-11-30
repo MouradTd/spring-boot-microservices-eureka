@@ -1,8 +1,10 @@
 package com.example.ressourceservice.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 public class Salle {
 
     @Id

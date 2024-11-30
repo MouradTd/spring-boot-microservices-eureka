@@ -4,17 +4,14 @@ import com.example.patientservice.dto.PatientDTO;
 import com.example.patientservice.ecxeption.BadRequestException;
 import com.example.patientservice.model.Patient;
 import com.example.patientservice.repository.PatientRepository;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +32,6 @@ public class PatientServiceImp implements PatientService {
     }
     @Override
     public void create(Patient patient) {
-        // TODO Auto-generated method stub
         patientRepository.save(patient);
     }
 
@@ -75,11 +71,15 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public List<Map<String, Object>> getAppointments(long patientId) {
+    public PatientDTO getAppointments(long patientId) {
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new RuntimeException("Patient not found with id: " + patientId));
+
+        List<Map<String, Object>> appointments;
         try {
-            return webClient.build()
+            appointments = webClient.build()
                     .get()
-                    .uri("http://appointment-service/api/appointment/patient/" + patientId)  // Updated path
+                    .uri("http://appointment-service/api/appointment/patient/" + patientId)
                     .retrieve()
                     .bodyToFlux(new ParameterizedTypeReference<Map<String, Object>>() {})
                     .collectList()
@@ -88,6 +88,10 @@ public class PatientServiceImp implements PatientService {
             logger.error("Error fetching appointments for patientId {}: {}", patientId, e.getMessage(), e);
             throw new BadRequestException("Failed to fetch appointments: " + e.getMessage());
         }
+
+        PatientDTO patientDTO = convertToDTO(patient);
+        patientDTO.setAppointments(appointments);
+        return patientDTO;
     }
 
 

@@ -17,20 +17,26 @@ spring:
           uri: lb://patient-service
           predicates:
             - Path=/api/patient/**
-#          filters:
-#            - RewritePath=/api/patient/(?<remaining>.*), /${remaining}
+
         - id: document-service
           uri: lb://patient-service
           predicates:
             - Path=/api/documents/**
-#          filters:
-#            - RewritePath=/api/documents/(?<remaining>.*), /${remaining}
+
         - id: appointment-service
           uri: lb://appointment-service
           predicates:
             - Path=/api/appointment/**
-#          filters:
-#            - RewritePath=/api/appointment/(?<remaining>.*), /${remaining}
+
+        - id: facture-service
+          uri: lb://facture-service
+          predicates:
+            - Path=/api/facture/**
+
+        - id: ressource-service
+          uri: lb://ressource-service
+          predicates:
+            - Path=/api/ressource/salle/**
 eureka:
   client:
     service-url:

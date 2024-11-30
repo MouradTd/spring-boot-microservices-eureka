@@ -5,6 +5,8 @@ import com.example.patientservice.model.Documents;
 import com.example.patientservice.service.DocumentService;
 import com.example.patientservice.service.DocumentServiceImp;
 import com.example.patientservice.service.PatientServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+@Tag(name = "Documents", description = "the Document Api")
 @RestController
 @RequestMapping("/api/documents")
 public class DocumentsController {
@@ -26,6 +29,9 @@ public class DocumentsController {
         this.documentService = documentService;
     }
 
+    @Operation(
+            summary = "Upload patient Docs",
+            description = "Upload patient Docs in the database")
     @PostMapping("/{id}")
     public ResponseEntity<?> uploadDoc(@PathVariable long id, MultipartFile file, DocumentDTO documentDTO) throws IOException {
         try {

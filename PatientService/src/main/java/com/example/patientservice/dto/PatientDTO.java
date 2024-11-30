@@ -2,6 +2,9 @@ package com.example.patientservice.dto;
 
 import lombok.*;
 
+import java.util.List;
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,4 +15,5 @@ public class PatientDTO {
     private String email;
     private String phone;
     private String address;
+    private List<Map<String, Object>> appointments;
 }

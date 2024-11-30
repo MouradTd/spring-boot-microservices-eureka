@@ -1,7 +1,7 @@
-package com.example.patientservice.config;
+package com.example.appointmentservice.config;
 
-import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +11,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Patient Service API")
+                        .title("Appointment Service API")
                         .version("1.0.0")
-                        .description("Patient Service API documentation for my application"));
+                        .description("Appointment Service API documentation for my application"));
     }
 }

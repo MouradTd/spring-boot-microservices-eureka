@@ -19,13 +19,13 @@ public class SalleAffectation {
     @ManyToOne
     private Salle salle;
 
-    private Long dentistId;
+//    private Long dentistId;
 
     private Long appointmentId;
 
-    private String day;
+//    private String day;
 
-    private LocalDateTime dateDebut;
+//    private LocalDateTime dateDebut;
 
-    private LocalDateTime dateFin;
+//    private LocalDateTime dateFin;
 }

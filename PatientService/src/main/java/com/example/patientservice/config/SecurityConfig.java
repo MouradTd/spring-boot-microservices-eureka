@@ -15,7 +15,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/patient/**").permitAll()
-                        .requestMatchers("/api/documents/**").permitAll()// Allows all requests to /api/patient/** endpoints
+                        .requestMatchers("/api/documents/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()                    // Requires authentication for other endpoints
                 )
                 .csrf(csrf -> csrf.disable());                           // Disable CSRF for testing purposes

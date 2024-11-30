@@ -14,7 +14,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/appointment/**").permitAll()  // Allows all requests to /api/patient/** endpoints
+                        .requestMatchers("/api/appointment/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()                    // Requires authentication for other endpoints
                 )
                 .csrf(csrf -> csrf.disable());                           // Disable CSRF for testing purposes

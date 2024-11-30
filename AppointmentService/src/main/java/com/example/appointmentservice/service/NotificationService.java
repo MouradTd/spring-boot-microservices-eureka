@@ -1,2 +1,7 @@
-package com.example.appointmentservice.service;public interface NotificationService {
+package com.example.appointmentservice.service;
+
+import com.example.appointmentservice.model.Notification;
+
+public interface NotificationService {
+    void publishNotification(Notification notification);
 }

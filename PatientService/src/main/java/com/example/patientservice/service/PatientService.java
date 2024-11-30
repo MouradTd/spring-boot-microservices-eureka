@@ -11,5 +11,5 @@ public interface PatientService {
     void delete(long id);
     List<PatientDTO> findAll();
 
-    List<?> getAppointments(long patientId);
+    PatientDTO getAppointments(long patientId);
 }
