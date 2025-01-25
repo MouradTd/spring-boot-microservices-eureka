@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PatientService {
     void create(Patient patient);
-    void update(Patient patient, long id);
+    Patient update(Patient patient, long id);
     void delete(long id);
     List<PatientDTO> findAll();
 

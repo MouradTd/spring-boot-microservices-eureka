@@ -36,7 +36,7 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public void update(Patient patient, long id) {
+    public Patient update(Patient patient, long id) {
         Patient existingPatient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
 
@@ -53,7 +53,7 @@ public class PatientServiceImp implements PatientService {
                 throw new RuntimeException("Failed to update field: " + field.getName(), e);
             }
         }
-        patientRepository.save(existingPatient);
+        return patientRepository.save(existingPatient);
     }
 
     @Override

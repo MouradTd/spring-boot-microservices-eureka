@@ -5,6 +5,8 @@ logging:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.web: DEBUG
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: api-gateway
   cloud:

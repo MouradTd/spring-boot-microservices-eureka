@@ -47,13 +47,13 @@ public class PatientController {
     }
 
     @Operation(
-            summary = "Update a patient",
-            description = "Update a patient in the database")
+        summary = "Update a patient",
+        description = "Update a patient in the database")
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable long id) {
         try {
-            patientService.update(patient, id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Patient updatedPatient = patientService.update(patient, id);
+            return new ResponseEntity<>(updatedPatient, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update patient: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
