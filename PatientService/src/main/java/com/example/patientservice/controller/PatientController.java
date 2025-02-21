@@ -81,4 +81,17 @@ public class PatientController {
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Find a patient",
+            description = "find a patient in the database")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById( @PathVariable long id) {
+        try {
+            PatientDTO patient = patientService.getById(id);
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update patient: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

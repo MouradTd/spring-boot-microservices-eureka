@@ -39,6 +39,11 @@ spring:
           uri: lb://ressource-service
           predicates:
             - Path=/api/ressource/salle/**
+
+        - id: product-service
+          uri: lb://ressource-service
+          predicates:
+            - Path=/api/ressource/product/**
 eureka:
   client:
     service-url:

@@ -22,6 +22,8 @@ public class Produit {
 
     private String description;
 
+    private Long quantity;
+
     private Double price;
 
 }

@@ -1,9 +1,6 @@
 package com.example.ressourceservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +17,12 @@ public class ProduitUsage {
 
     private String usageDescription;
 
-    private Long produitId;
+    private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "produitId", nullable = false)
+    private Produit produit;
+
+    private String status;
 
 }

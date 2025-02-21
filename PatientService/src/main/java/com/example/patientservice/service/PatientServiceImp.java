@@ -94,6 +94,14 @@ public class PatientServiceImp implements PatientService {
         return patientDTO;
     }
 
+    @Override
+    public PatientDTO getById(long id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
+
+        return convertToDTO(patient);
+    }
+
 
 
 

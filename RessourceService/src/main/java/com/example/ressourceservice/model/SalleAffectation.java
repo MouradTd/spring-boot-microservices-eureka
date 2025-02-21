@@ -23,7 +23,7 @@ public class SalleAffectation {
 
     private Long appointmentId;
 
-//    private String day;
+    private String status;
 
 //    private LocalDateTime dateDebut;
 

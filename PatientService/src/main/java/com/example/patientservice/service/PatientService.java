@@ -12,4 +12,5 @@ public interface PatientService {
     List<PatientDTO> findAll();
 
     PatientDTO getAppointments(long patientId);
+    PatientDTO getById(long patientId);
 }

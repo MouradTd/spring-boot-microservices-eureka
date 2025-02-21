@@ -1,5 +1,6 @@
 package com.example.appointmentservice.listners;
 
+import com.example.appointmentservice.dto.AppointmentDTO;
 import com.example.appointmentservice.exception.InvalidMessageException;
 import com.example.appointmentservice.model.Appointment;
 import com.example.appointmentservice.model.Notification;
@@ -44,7 +45,7 @@ public class AppointmentListener {
             final Map<String, Object> payload = readJsonAsMap(in);
 
             final Appointment appointment = appointmentFromPayload(payload);
-            final Appointment savedAppointment = appointmentService.create(appointment);
+            final AppointmentDTO savedAppointment = appointmentService.create(appointment);
 
             final String message = String.format(
                     "Appointment '%s' [%s] [%s] [%s] [%s] [%s] [%s] [%s] [%s]  persisted!",

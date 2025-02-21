@@ -1,6 +1,7 @@
 package com.example.appointmentservice.controller;
 
 
+import com.example.appointmentservice.dto.AppointmentDTO;
 import com.example.appointmentservice.model.Appointment;
 import com.example.appointmentservice.service.AppointmentServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @Tag(name = "Appointment", description = "the Appointment Api")
 @RestController
 @RequestMapping("/api/appointment")
@@ -25,8 +28,8 @@ public class AppointmentController {
             summary = "Fetch all appointments",
             description = "fetches all appointments from the database")
     @GetMapping("/")
-    public ResponseEntity<List<Appointment>> getAllAppointments() {
-        List<Appointment> appointments = appointmentService.findAll();
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+        List<AppointmentDTO> appointments = appointmentService.findAll();
         return new ResponseEntity<>(appointments, HttpStatus.OK);
     }
 
@@ -43,9 +46,9 @@ public class AppointmentController {
             summary = "Create an appointment",
             description = "Create an appointment in the database")
     @PostMapping("/")
-    public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
-        appointmentService.create(appointment);
-        return new ResponseEntity<>(appointment, HttpStatus.CREATED);
+    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody Appointment appointment) {
+        AppointmentDTO newAppointement = appointmentService.create(appointment);
+        return new ResponseEntity<>(newAppointement, HttpStatus.CREATED);
     }
 
     @Operation(
@@ -54,8 +57,8 @@ public class AppointmentController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAppointment(@RequestBody Appointment appointment, @PathVariable long id) {
         try {
-            appointmentService.update(appointment, id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            AppointmentDTO updatedAppointement = appointmentService.update(appointment, id);
+            return new ResponseEntity<>(updatedAppointement,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update appointment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -73,4 +76,18 @@ public class AppointmentController {
             return new ResponseEntity<>("Failed to delete appointment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Operation(
+            summary = "Update an appointment and salle in ressource service",
+            description = "Update an appointment in the database")
+    @PostMapping("/validate/{id}")
+    public ResponseEntity<?> validatePassed(@PathVariable long id) {
+        try {
+            Appointment updatedAppointement = appointmentService.validatePassed(id);
+            return new ResponseEntity<>(updatedAppointement,HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update appointment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
