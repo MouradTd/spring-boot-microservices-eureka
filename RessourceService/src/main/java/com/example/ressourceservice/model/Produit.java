@@ -23,6 +23,7 @@ public class Produit {
     private String description;
 
     private Long quantity;
+    private Long qte_used = 0L;
 
     private Double price;
 

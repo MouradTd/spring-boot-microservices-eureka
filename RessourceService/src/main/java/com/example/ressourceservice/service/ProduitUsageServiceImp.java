@@ -71,8 +71,8 @@ public class ProduitUsageServiceImp implements ProduitUsageService {
         Produit produit = produitRepository.findById(usage.getProduit().getId())
                 .orElseThrow(() -> new RuntimeException("Produit not found with id: " + usage.getProduit().getId()));
 
-        if (produit.getQuantity() >= usage.getQuantity()) {
-            produit.setQuantity(produit.getQuantity() - usage.getQuantity());
+        if ((produit.getQuantity() - produit.getQte_used()) >= usage.getQuantity()) {
+            produit.setQte_used(produit.getQte_used() + Long.valueOf(usage.getQuantity()));
             usage.setStatus("delivered");
             produitUsageRepository.save(usage);
             produitRepository.save(produit);
