@@ -24,6 +24,9 @@ public class ProduitUsageServiceImp implements ProduitUsageService {
 
     @Override
     public void create(ProduitUsage produitUsage) {
+        if (produitUsage.getProduit() == null) {
+            throw new RuntimeException("Produit must not be null");
+        }
         produitUsageRepository.save(produitUsage);
     }
 

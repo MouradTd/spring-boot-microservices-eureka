@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AppointmentService {
     AppointmentDTO create(Appointment appointment);
     AppointmentDTO update(Appointment appointment, long id);
-    Appointment validatePassed(long id);
+    AppointmentDTO validatePassed(long id);
     void delete(long id);
     List<AppointmentDTO> findAll();
 

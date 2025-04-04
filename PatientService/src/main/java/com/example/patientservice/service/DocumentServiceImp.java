@@ -40,6 +40,27 @@ public class DocumentServiceImp implements DocumentService {
         return convertToDTO(document);
     }
 
+   @Override
+    public DocumentDTO deleteDoc(long documentId) throws IOException {
+        Documents document = documentsRepository.findById(documentId)
+                .orElseThrow(() -> new IllegalArgumentException("Document not found"));
+
+        // Extract the public ID from the URL
+        String fileUrl = document.getAttachement();
+        String publicId = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.lastIndexOf('.'));
+
+        // Delete the file from Cloudinary
+        try {
+            uploadFile.delete(publicId);
+        } catch (IOException e) {
+            throw new IOException("Failed to delete file from Cloudinary", e);
+        }
+
+        // Delete the document from the repository
+        documentsRepository.delete(document);
+        return convertToDTO(document);
+    }
+
     private DocumentDTO convertToDTO(Documents document) {
         DocumentDTO documentDTO = new DocumentDTO();
         BeanUtils.copyProperties(document, documentDTO);

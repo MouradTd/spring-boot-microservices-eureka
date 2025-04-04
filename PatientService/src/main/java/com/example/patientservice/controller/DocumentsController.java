@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,6 +36,19 @@ public class DocumentsController {
             return new ResponseEntity<>(document, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to upload Doc: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Operation(
+            summary = "Delete patient Docs",
+            description = "Delete patient Docs in the database")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDoc(@PathVariable long id) throws IOException {
+        try {
+            DocumentDTO document = documentService.deleteDoc(id);
+            return new ResponseEntity<>(document, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete Doc: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -20,7 +20,7 @@ public class ProduitUsage {
     private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "produitId", nullable = false)
+    @JoinColumn(name = "produit_id", nullable = false)
     private Produit produit;
 
     private String status;

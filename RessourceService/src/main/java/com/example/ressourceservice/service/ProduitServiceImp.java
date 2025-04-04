@@ -50,4 +50,9 @@ public class ProduitServiceImp implements ProduitService {
     public List<Produit> findAll() {
         return produitRepository.findAll();
     }
+
+    @Override
+    public Produit findById(long id) {
+        return produitRepository.findById(id).orElseThrow(() -> new RuntimeException("Produit not found with id: " + id));
+    }
 }

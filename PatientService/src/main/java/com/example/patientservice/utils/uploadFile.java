@@ -18,4 +18,7 @@ public class uploadFile {
     public  String upload(MultipartFile file) throws IOException {
         return cloudinary.uploader().upload(file.getBytes(), Map.of("public_id", UUID.randomUUID().toString())).get("url").toString();
     }
+    public void delete(String publicId) throws IOException {
+        cloudinary.uploader().destroy(publicId, Map.of());
+    }
 }

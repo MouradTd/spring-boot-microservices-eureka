@@ -162,7 +162,7 @@ public class AppointmentServiceImp implements AppointmentService {
             maxAttempts = 3,
             backoff = @Backoff(delay = 2000)
     )
-    public Appointment validatePassed(long id) {
+    public AppointmentDTO validatePassed(long id) {
         Appointment existingAppointement = appointmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
 
@@ -188,8 +188,21 @@ public class AppointmentServiceImp implements AppointmentService {
                 logger.error("Exception: {}", e.getMessage());
                 throw new RuntimeException("Failed to update appointment: " + e.getMessage(), e);
             }
+        AppointmentDTO appointmentDTO = convertToDTO(existingAppointement);
+        try {
+            Map<String, Object> patient = webClient.build()
+                    .get()
+                    .uri("http://patient-service/api/patient/" + appointmentDTO.getPatientId())
+                    .retrieve()
+                    .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+                    .block();
+            appointmentDTO.setPatient(patient);
+        } catch (Exception e) {
+            logger.error("Error fetching patient object {}: {}", existingAppointement.getPatientId(), e.getMessage(), e);
+            throw new BadRequestException("Failed to fetch patient details: " + e.getMessage());
+        }
 
-        return existingAppointement;
+        return appointmentDTO;
     }
 
 

@@ -83,7 +83,7 @@ public class AppointmentController {
     @PostMapping("/validate/{id}")
     public ResponseEntity<?> validatePassed(@PathVariable long id) {
         try {
-            Appointment updatedAppointement = appointmentService.validatePassed(id);
+            AppointmentDTO updatedAppointement = appointmentService.validatePassed(id);
             return new ResponseEntity<>(updatedAppointement,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to update appointment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

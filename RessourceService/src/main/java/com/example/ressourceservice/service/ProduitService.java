@@ -9,4 +9,5 @@ public interface ProduitService {
     Produit update(Produit produit, long id);
     void delete(long id);
     List<Produit> findAll();
+    Produit findById(long id);
 }

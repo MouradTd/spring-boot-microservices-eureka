@@ -10,4 +10,5 @@ import java.io.IOException;
 
 public interface DocumentService {
     DocumentDTO uploadDoc(long patientId, MultipartFile file, DocumentDTO documentDTO) throws IOException;
+    DocumentDTO deleteDoc(long documentId) throws IOException;
 }

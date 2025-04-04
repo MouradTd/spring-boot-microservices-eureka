@@ -1,8 +1,6 @@
 package com.example.patientservice.dto;
 
 import com.example.patientservice.enums.Gender;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.util.List;
@@ -27,4 +25,5 @@ public class PatientDTO {
     private String medicalHistory;
     private String allergies;
     private List<Map<String, Object>> appointments;
+    private List<DocumentDTO> documents;
 }

@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DocumentDTO {
+    private long id;
     private String title;
     private String attachement;
 }

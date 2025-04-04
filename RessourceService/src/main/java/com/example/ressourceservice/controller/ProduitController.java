@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ressource/product")
@@ -68,7 +69,16 @@ public class ProduitController {
     }
 
     @PostMapping("/usage/create")
-    public ResponseEntity<ProduitUsage> createProduitUsage(@RequestBody ProduitUsage produitUsage) {
+    public ResponseEntity<ProduitUsage> createProduitUsage(@RequestBody Map<String, Object> payload) {
+        Long produitId = Long.valueOf(payload.get("produit_id").toString());
+        Produit produit = produitService.findById(produitId);
+
+        ProduitUsage produitUsage = new ProduitUsage();
+        produitUsage.setProduit(produit);
+        produitUsage.setQuantity(Integer.valueOf(payload.get("quantity").toString()));
+        produitUsage.setStatus(payload.get("status").toString());
+        produitUsage.setUsageDescription(payload.get("usageDescription").toString());
+
         produitUsageService.create(produitUsage);
         return new ResponseEntity<>(produitUsage, HttpStatus.CREATED);
     }
