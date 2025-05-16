@@ -11,14 +11,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth ->{
-                    auth.requestMatchers("/", "/api/auth/**" ).permitAll();
-                    auth.anyRequest().authenticated();
-
-                })
-                .formLogin(Customizer.withDefaults());
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/users/**").permitAll()
+                        .anyRequest().authenticated()                    // Requires authentication for other endpoints
+                )
+                .csrf(csrf -> csrf.disable());                           // Disable CSRF for testing purposes
         return http.build();
     }
 }

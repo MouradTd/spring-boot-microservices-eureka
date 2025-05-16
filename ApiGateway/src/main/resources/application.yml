@@ -5,6 +5,11 @@ logging:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.web: DEBUG
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/myrealm
   main:
     web-application-type: reactive
   application:
@@ -35,15 +40,20 @@ spring:
           predicates:
             - Path=/api/facture/**
 
-        - id: ressource-service
+        - id: salle-service
           uri: lb://ressource-service
           predicates:
             - Path=/api/ressource/salle/**
 
-        - id: product-service
+        - id: ressource-service
           uri: lb://ressource-service
           predicates:
             - Path=/api/ressource/product/**
+
+        - id: users-service
+          uri: lb://users-service
+          predicates:
+            - Path=/api/users/**
 eureka:
   client:
     service-url:

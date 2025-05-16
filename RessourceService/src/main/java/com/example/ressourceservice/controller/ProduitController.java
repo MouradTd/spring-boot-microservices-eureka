@@ -9,6 +9,7 @@ import com.example.ressourceservice.service.ProduitUsageServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class ProduitController {
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updatePatient(@RequestBody Produit patient, @PathVariable long id) {
+    public ResponseEntity<?> updateProduct(@RequestBody Produit patient, @PathVariable long id) {
         try {
             Produit updatedPatient = produitService.update(patient, id);
             return new ResponseEntity<>(updatedPatient, HttpStatus.OK);
@@ -51,7 +52,7 @@ public class ProduitController {
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deletePatient(@PathVariable long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable long id) {
         try {
             produitService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
