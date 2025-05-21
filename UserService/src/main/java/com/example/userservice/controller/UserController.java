@@ -1,5 +1,6 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.config.KeycloakConfig;
 import com.example.userservice.dto.PasswordDto;
 import com.example.userservice.dto.RoleDto;
 import com.example.userservice.dto.UserDto;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserServiceImp userService;
-    public UserController(UserServiceImp userService) {
+    private final KeycloakConfig keycloakConfig;
+
+    public UserController(UserServiceImp userService, KeycloakConfig keycloakConfig) {
         this.userService = userService;
+        this.keycloakConfig = keycloakConfig;
     }
 
 
@@ -35,7 +39,7 @@ public class UserController {
         if (id == null || roleDto.getRoleName() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user data");
         }
-        String result = userService.assignRealmRoleToUser(id, roleDto.getRoleName());
+        String result = userService.assignClientRoleToUser(id, keycloakConfig.getClientId(),roleDto.getRoleName());
         return ResponseEntity.ok(result);
     }
 

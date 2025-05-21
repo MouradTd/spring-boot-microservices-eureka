@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
     String createUser(UserDto userData);
-    String assignRealmRoleToUser(String userId, String roleName);
+    String assignClientRoleToUser(String userId,String clientId, String roleName);
     String resetPassword(String userId, String newPassword);
     void deleteUser(String userId);
     List<UserRepresentation> findUsersByUsername(String username);

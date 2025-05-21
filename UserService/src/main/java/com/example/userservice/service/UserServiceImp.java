@@ -4,6 +4,7 @@ import com.example.userservice.config.KeycloakConfig;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.model.User;
 import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -50,17 +51,53 @@ public class UserServiceImp implements UserService {
 
 
     @Override
-    public String assignRealmRoleToUser(String userId, String roleName) {
+    public String assignClientRoleToUser(String userId, String clientId, String roleName) {
         try {
-            UserRepresentation user = keycloakConfig.getUsersResource().get(userId).toRepresentation();
-            RoleRepresentation role = keycloakConfig.getRealmResource().roles().get(roleName).toRepresentation();
+            // Fetch the user from Keycloak
+            var userResource = keycloakConfig.getUsersResource().get(userId);
+            if (userResource == null) {
+                throw new RuntimeException("User not found");
+            }
+            UserRepresentation user = userResource.toRepresentation();
 
-            keycloakConfig.getUsersResource().get(userId).roles().realmLevel().add(Collections.singletonList(role));
-            return "Role assigned successfully";
+            // Fetch the client by client ID
+            List<ClientRepresentation> clients = keycloakConfig.getRealmResource().clients().findAll();
+            ClientRepresentation client = clients.stream()
+                    .filter(c -> c.getClientId().equals(clientId))
+                    .findFirst()
+                    .orElse(null);
+
+            if (client == null) {
+                throw new RuntimeException("Client not found for clientId: " + clientId);
+            }
+
+            String clientUuid = client.getId();
+            System.out.println("Client UUID: " + clientUuid);
+
+            // Fetch the client role
+            RoleRepresentation clientRole;
+            try {
+                clientRole = keycloakConfig.getRealmResource()
+                        .clients()
+                        .get(clientUuid)
+                        .roles()
+                        .get(roleName)
+                        .toRepresentation();
+            } catch (NotFoundException e) {
+                throw new RuntimeException( "Role not found for client: " + clientUuid + " Role: " + roleName);
+            }
+
+            // Assign the client role to the user
+            keycloakConfig.getUsersResource()
+                    .get(userId)
+                    .roles()
+                    .clientLevel(clientUuid)
+                    .add(Collections.singletonList(clientRole));
+
+            return "Client role assigned successfully";
         } catch (NotFoundException e) {
-            return "User or role not found: " + e.getMessage();
-        } catch (Exception e) {
-            return "An error occurred: " + e.getMessage();
+            System.err.println("NotFoundException: " + e.getMessage());
+            return "User, client, or role not found: " + e.getMessage();
         }
     }
 
