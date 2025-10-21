@@ -17,6 +17,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/patient/**").permitAll()
                         .requestMatchers("/api/documents/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/prometheus").permitAll()
                         .anyRequest().authenticated()                    // Requires authentication for other endpoints
                 )
                 .csrf(csrf -> csrf.disable());                           // Disable CSRF for testing purposes

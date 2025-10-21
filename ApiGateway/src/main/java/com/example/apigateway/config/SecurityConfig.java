@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .pathMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .pathMatchers("/api/ressource/**").hasRole("ressource-manager")
                     .pathMatchers("/api/patient/**").hasRole("patient-manager")
+                    .pathMatchers("/actuator/prometheus").permitAll()
                 .anyExchange().authenticated()
             )
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt ->

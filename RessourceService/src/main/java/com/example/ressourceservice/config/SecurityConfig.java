@@ -16,6 +16,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/ressource/**").permitAll()  // Allows all requests to /api/ressource/** endpoints
                         .requestMatchers("/api/product/**").permitAll()
+                        .requestMatchers("/actuator/prometheus").permitAll()
                         .anyRequest().authenticated()                    // Requires authentication for other endpoints
                 )
                 .csrf(csrf -> csrf.disable());                           // Disable CSRF for testing purposes

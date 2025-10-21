@@ -1,4 +1,4 @@
-package com.example.appointmentservice.config;
+package com.example.notificationservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/appointment/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/prometheus").permitAll()
                         .anyRequest().authenticated()                    // Requires authentication for other endpoints
                 )
@@ -23,4 +21,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-
